@@ -3,6 +3,8 @@ import subprocess
 import sys
 import time
 from functools import partial
+from pathlib import Path
+
 from PySide6.QtCore import Signal
 
 import paramiko
@@ -194,18 +196,21 @@ class FramelessWindow(QMainWindow):
         self.mainLayout.addWidget(sidebarContainer, alignment=Qt.AlignLeft)
 
         self.logoLabel = QLabel()
-        self.logoLabel.setFixedHeight(125)
+        self.logoLabel.setText("VPN\nClient")
+        self.logoLabel.setFixedHeight(100)
         self.logoLabel.setAlignment(Qt.AlignCenter)
-        logo_path = self.get_image_path('logo.png')
-        self.logoLabel.setPixmap(QPixmap(logo_path).scaled(175, 350, Qt.KeepAspectRatio))
-
-
-        self.logoLabel.setStyleSheet("border-bottom: 1px solid #2a2d34; border-radius: 10px;")
+        self.logoLabel.setStyleSheet("""
+            color: white;
+            font-size: 22px;
+            font-weight: 700;
+            line-height: 1.1;
+            border-bottom: 1px solid #2a2d34;
+        """)
         self.sidebarLayout.addWidget(self.logoLabel)
 
         self.menuItems = [
-            QPushButton(QIcon(self.get_image_path('fullvpn.png')), " Full VPN"),
-            QPushButton(QIcon(self.get_image_path('faq.png')), " FAQ"),
+            QPushButton(QIcon(self.get_image_path('globe.png')), " Full VPN"),
+            QPushButton(QIcon(self.get_image_path('help.png')), " FAQ"),
             QPushButton("Reset Connection")
         ]
 
@@ -267,7 +272,7 @@ class FramelessWindow(QMainWindow):
 
         self.powerButton = CustomPowerButton()
         self.mainContentLayout.addWidget(self.powerButton, 0, Qt.AlignCenter)
-
+        self.powerButton.update_color(True)
         self.consoleVpnSetupRadio = QRadioButton("Console Support", self.mainContent)
         self.consoleVpnSetupRadio.move(150, 160)
         self.consoleVpnSetupRadio.setCursor(QCursor(Qt.PointingHandCursor))
@@ -592,16 +597,12 @@ class FramelessWindow(QMainWindow):
         return super(FramelessWindow, self).eventFilter(watched, event)
 
     def get_base_path(self):
-        """Get the base path for the application."""
         if getattr(sys, 'frozen', False):
-
-            return sys._MEIPASS
-        else:
-            return os.path.dirname(os.path.abspath(__file__))
+            return Path(sys._MEIPASS)
+        return Path(__file__).resolve().parents[2]  # <-- project root
 
     def get_image_path(self, image_name):
-        """Construct the path to an image resource."""
-        return os.path.join(self.base_path, 'ss', image_name)
+        return str(self.base_path / "ss" / image_name)
 
     def modify_firewall(self,server_ip, username, password, action, client_ip):
         """
@@ -769,8 +770,9 @@ class FramelessWindow(QMainWindow):
         """
 
 
-        full_vpn_icon = QIcon(self.get_image_path('fullvpn1.png'))
-        faq_icon = QIcon(self.get_image_path('faq1.png'))
+        full_vpn_icon = QIcon(self.get_image_path('home.png'))
+
+        faq_icon = QIcon(self.get_image_path('home.png'))
 
         for btn in self.menuItems:
             if "Full VPN" in btn.text():
@@ -894,8 +896,8 @@ class FramelessWindow(QMainWindow):
             }
         """
 
-        full_vpn_icon = QIcon(self.get_image_path('fullvpn.png'))
-        faq_icon = QIcon(self.get_image_path('faq.png'))
+        full_vpn_icon = QIcon(self.get_image_path('home.png'))
+        faq_icon = QIcon(self.get_image_path('home.png'))
 
         for btn in self.menuItems:
             if "Full VPN" in btn.text():

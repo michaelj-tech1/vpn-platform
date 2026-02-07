@@ -7,10 +7,10 @@ import keyring
 from PySide6.QtCore import Qt, QObject, QCoreApplication
 import sys
 from PySide6.QtWidgets import QApplication, QMessageBox
-from monitor import SecurityMonitor
-from login_ui import LoginWindow
-from api import keyauthapp
-from main_ui import FramelessWindow
+from core.monitor import SecurityMonitor
+from ui.login_ui import LoginWindow
+from ui.api import keyauthapp
+from ui.main_ui import FramelessWindow
 from ctypes import windll
 
 
@@ -276,12 +276,12 @@ def main():
     main_app = Main(window)
     monitor = SecurityMonitor()
     monitor.run_security_check()
-    login_window.login_successful.connect(main_app.show)
-    one_time_key_checker = OneTimeKeyChecker(keyauthapp)
-    one_time_key_checker.check_saved_license_and_login()
-
-    login_window.check_saved_license_and_login()
-
+    # login_window.login_successful.connect(main_app.show)
+    # one_time_key_checker = OneTimeKeyChecker(keyauthapp)
+    # one_time_key_checker.check_saved_license_and_login()
+    #
+    # login_window.check_saved_license_and_login()
+    main_app.show()
     sys.exit(app.exec())
 
 if __name__ == "__main__":
