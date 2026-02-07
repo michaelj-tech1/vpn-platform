@@ -23,9 +23,11 @@ This project is a fully managed personal VPN “platform”:
 
 ```mermaid
 flowchart LR
-    U[User Device\n(OpenVPN Client / Desktop App)] -->|TLS VPN Tunnel| S[(VPN Server\nOpenVPN on Linux)]
-    S -->|NAT + Forwarding| I[(Internet)]
-    A[Attacker / Bot] -->|SSH / VPN probes| S
-    F[Firewall Rules\n(UFW/iptables)] --> S
-    B[Fail2Ban\n(ban abusive IPs)] --> S
-    M[Ansible Control Node] -->|provision, config, updates| S
+    U["User Device<br/>(OpenVPN Client / Desktop App)"] -->|"TLS VPN Tunnel"| S["VPN Server<br/>(OpenVPN on Linux)"]
+    S -->|"NAT + Forwarding"| I["Internet"]
+
+    A["Attacker / Bot"] -->|"SSH / VPN probes"| S
+    F["Firewall Rules<br/>(UFW / iptables)"] --> S
+    B["Fail2Ban<br/>(ban abusive IPs)"] --> S
+    M["Ansible Control Node"] -->|"provision, config, updates"| S
+
