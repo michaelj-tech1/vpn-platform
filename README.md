@@ -29,3 +29,4 @@ flowchart LR
     F[Firewall Rules\n(UFW/iptables)] --> S
     B[Fail2Ban\n(ban abusive IPs)] --> S
     M[Ansible Control Node] -->|provision, config, updates| S
+
