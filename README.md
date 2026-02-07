@@ -6,11 +6,6 @@ A multi-region OpenVPN platform deployed across **20 servers** to provide secure
 
 ---
 
-
-## Desktop client (PySide6)
-
-<img src="assets/client-ui.png" alt="Desktop VPN client UI" width="700" />
-
 ## What this is
 
 This project is a fully managed personal VPN “platform”:
